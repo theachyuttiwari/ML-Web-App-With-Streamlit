@@ -6,7 +6,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import plot_confusion_matrix, plot_roc_curve, plot_precision_recall_curve
+from sklearn.metrics import precision_score, recall_score, confusion_matrix, roc_curve, precision_recall_curve
 from sklearn.metrics import precision_score, recall_score
 
 def main():
@@ -32,19 +32,20 @@ def main():
     
     def plot_metrics(metrics_list):
         if 'Confusion Matrix' in metrics_list:
-            st.subheader("Confusion Matrix")
-            plot_confusion_matrix(model, x_test, y_test, display_labels=class_names)
-            st.pyplot()
+        st.subheader("Confusion Matrix")
+        confusion_mtx = confusion_matrix(y_test, y_pred)
+        st.write(confusion_mtx)
 
         if 'ROC Curve' in metrics_list:
-            st.subheader("ROC Curve")
-            plot_roc_curve(model, x_test, y_test)
-            st.pyplot()
-        
+        st.subheader("ROC Curve")
+        fpr, tpr, _ = roc_curve(y_test, y_pred)
+        st.line_chart(pd.DataFrame({'fpr': fpr, 'tpr': tpr}))
+
         if 'Precision-Recall Curve' in metrics_list:
-            st.subheader('Precision-Recall Curve')
-            plot_precision_recall_curve(model, x_test, y_test)
-            st.pyplot()
+        st.subheader('Precision-Recall Curve')
+        precision, recall, _ = precision_recall_curve(y_test, y_pred)
+        st.line_chart(pd.DataFrame({'precision': precision[:-1], 'recall': recall[:-1]}))
+
 
     df = load_data()
     class_names = ['edible', 'poisonous']
