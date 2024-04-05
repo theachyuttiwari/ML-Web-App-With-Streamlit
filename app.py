@@ -32,19 +32,19 @@ def main():
     
     def plot_metrics(metrics_list):
         if 'Confusion Matrix' in metrics_list:
-        st.subheader("Confusion Matrix")
-        confusion_mtx = confusion_matrix(y_test, y_pred)
-        st.write(confusion_mtx)
+            st.subheader("Confusion Matrix")
+            confusion_mtx = confusion_matrix(y_test, y_pred)
+            st.write(confusion_mtx)
 
         if 'ROC Curve' in metrics_list:
-        st.subheader("ROC Curve")
-        fpr, tpr, _ = roc_curve(y_test, y_pred)
-        st.line_chart(pd.DataFrame({'fpr': fpr, 'tpr': tpr}))
+            st.subheader("ROC Curve")
+            fpr, tpr, _ = roc_curve(y_test, y_pred)
+            st.line_chart(pd.DataFrame({'fpr': fpr, 'tpr': tpr}))
 
         if 'Precision-Recall Curve' in metrics_list:
-        st.subheader('Precision-Recall Curve')
-        precision, recall, _ = precision_recall_curve(y_test, y_pred)
-        st.line_chart(pd.DataFrame({'precision': precision[:-1], 'recall': recall[:-1]}))
+            st.subheader('Precision-Recall Curve')
+            precision, recall, _ = precision_recall_curve(y_test, y_pred)
+            st.line_chart(pd.DataFrame({'precision': precision[:-1], 'recall': recall[:-1]}))
 
 
     df = load_data()
